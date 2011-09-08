@@ -28,7 +28,7 @@ module OrderExport
 
           render and return unless export
 
-          @orders = @search.do_search
+          @orders = @search
 
 
           orders_export = FasterCSV.generate(:col_sep => ";", :row_sep => "\r\n") do |csv|
