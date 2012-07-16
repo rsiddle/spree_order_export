@@ -16,4 +16,6 @@ en:
             quantity: Quantity
             order_total: Order total
             payment_method: Payment method
+            discount: Discount
+            nonprofit: Nonprofit
 

@@ -5,31 +5,31 @@ module Spree
         base.class_eval do
 
           def order_export
-            export = !params[:search].nil?
-            params[:search] = {} unless params[:search]
+            export = !params[:q].nil?
+            params[:q] = {} unless params[:q]
 
-            if params[:search][:created_at_greater_than].blank?
-              params[:search][:created_at_greater_than] = Time.zone.now.beginning_of_month
+            if params[:q][:created_at_gt].blank?
+              params[:q][:created_at_gt] = Time.zone.now.beginning_of_month
             else
-              params[:search][:created_at_greater_than] = Time.zone.parse(params[:search][:created_at_greater_than]).beginning_of_day rescue Time.zone.now.beginning_of_month
+              params[:q][:created_at_gt] = Time.zone.parse(params[:q][:created_at_gt]).beginning_of_day rescue Time.zone.now.beginning_of_month
             end
 
-            if params[:search] && !params[:search][:created_at_less_than].blank?
-              params[:search][:created_at_less_than] = Time.zone.parse(params[:search][:created_at_less_than]).end_of_day rescue ""
+            if params[:q] && !params[:q][:created_at_lt].blank?
+              params[:q][:created_at_lt] = Time.zone.parse(params[:q][:created_at_lt]).end_of_day rescue ""
             end
 
-            params[:search][:completed_at_is_not_null] ||= "1"
-            if params[:search].delete(:completed_at_is_not_null) == "1"
-              params[:search][:completed_at_is_not_null] = true
+            params[:q][:completed_at_not_null] ||= "1"
+            if params[:q].delete(:completed_at_not_null) == "1"
+              params[:q][:completed_at_not_null] = true
             end
 
-            params[:search][:meta_sort] ||= "created_at.desc"
+            params[:q][:meta_sort] ||= "created_at.desc"
 
-            @search = Spree::Order.metasearch(params[:search])
+            @search = Spree::Order.ransack(params[:q])
 
             render and return unless export
 
-            @orders = @search
+            @orders = @search.result
 
 
             orders_export = CSV.generate(:col_sep => ",", :row_sep => "\r\n") do |csv|
@@ -38,10 +38,10 @@ module Spree
                 t('order_export_ext.header.completed_at'),
                 t('order_export_ext.header.number'),
                 t('order_export_ext.header.name'),
-                t('order_export_ext.header.address'),
-                t('order_export_ext.header.phone'),
                 t('order_export_ext.header.email'),
                 t('order_export_ext.header.variant_name'),
+                t('order_export_ext.header.nonprofit'),
+                t('order_export_ext.header.discount'),
                 t('order_export_ext.header.quantity'),
                 t('order_export_ext.header.order_total'),
                 t('order_export_ext.header.payment_method')
@@ -55,22 +55,11 @@ module Spree
                   csv_line << order.updated_at
                   csv_line << order.completed_at
                   csv_line << order.number
-
-                  if order.bill_address
-                    csv_line << order.bill_address.full_name
-                    address_line = ""
-                    address_line << order.bill_address.address1 + " " if order.bill_address.address1?
-                    address_line << order.bill_address.address2 + " " if order.bill_address.address2?
-                    address_line << order.bill_address.city + " " if order.bill_address.city?
-                    address_line << order.bill_address.country.name + " " if order.bill_address.country_id?
-                    csv_line << address_line
-                    csv_line << order.bill_address.phone if order.bill_address.phone?
-                  else
-                    csv_line << ""
-                    csv_line << ""
-                  end
+                  csv_line << order.name || ""
                   csv_line << order.email || ""
                   csv_line << line_item.variant.name
+                  csv_line << line_item.variant.option_values.first(:conditions => "option_type_id = 1").name
+                  csv_line << line_item.variant.option_values.first(:conditions => "option_type_id = 2").name
                   csv_line << line_item.quantity
                   csv_line << order.total.to_s
                   csv_line << order.payment_method.name
@@ -84,4 +73,4 @@ module Spree
       end
     end
   end
-end 
+end
