@@ -61,7 +61,7 @@ module Spree
                   csv_line << line_item.variant.option_values.first(:conditions => "option_type_id = 1").name
                   csv_line << line_item.variant.option_values.first(:conditions => "option_type_id = 2").name
                   csv_line << line_item.quantity
-                  csv_line << line_item.price.to_s
+                  csv_line << line_item.total.to_s
                   csv_line << order.payment_method.name
                   csv << csv_line
                 end
