@@ -37,8 +37,16 @@ module Spree
                 t('order_export_ext.header.last_updated'),
                 t('order_export_ext.header.completed_at'),
                 t('order_export_ext.header.number'),
-                t('order_export_ext.header.name'),
-                "Ship to",
+                "Ordered By",
+                "Company",
+                "Name"
+                "Address1",
+                "Address2",
+                "City",
+                "State",
+                "Zip",
+                "Phone",
+                "Country",
                 t('order_export_ext.header.variant_name'),
                 "Options",
                 # t('order_export_ext.header.nonprofit'),
@@ -52,11 +60,6 @@ module Spree
 
               @orders.each do |order|
                 ship_address = order.ship_address
-                ship_to = "#{ship_address.full_name}"
-                ship_to << " #{ship_address.address1} #{ship_address.address2}"
-                ship_to << " #{ship_address.city} #{ship_address.state_text} #{ship_address.zipcode}"
-                ship_to << " #{ship_address.country.name}"
-                ship_to << " #{ship_address.phone}"
                 
                 order.line_items.each do |line_item|
                   csv_line = []
@@ -64,7 +67,15 @@ module Spree
                   csv_line << order.completed_at
                   csv_line << order.number
                   csv_line << order.name
-                  csv_line << ship_to
+                  csv_line << ship_address.company
+                  csv_line << ship_address.full_name
+                  csv_line << ship_address.address1
+                  csv_line << ship_address.address2
+                  csv_line << ship_address.city
+                  csv_line << ship_address.state_text
+                  csv_line << ship_address.zipcode
+                  csv_line << ship_address.phone
+                  csv_line << ship_address.country.name
                   csv_line << line_item.variant.name
                   csv_line << line_item.variant.option_values.map(&:name).join(", ")
                   # csv_line << line_item.variant.option_values.first(:conditions => "option_type_id = 2").name
