@@ -39,7 +39,7 @@ module Spree
                 t('order_export_ext.header.number'),
                 "Ordered By",
                 "Company",
-                "Name"
+                "Name",
                 "Address1",
                 "Address2",
                 "City",
