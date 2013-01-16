@@ -5,7 +5,7 @@ Gem::Specification.new do |s|
   s.summary     = 'Add gem summary here'
   #s.description = 'Add (optional) gem description here'
   s.required_ruby_version = '>= 1.9.2'
-
+  s.authors     = [""]
   # s.author            = 'David Heinemeier Hansson'
   # s.email             = 'david@loudthinking.com'
   # s.homepage          = 'http://www.rubyonrails.org'
@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
 
   s.has_rdoc = true
 
-  s.add_dependency('spree_core', '>= 0.80.0.beta')
+  #s.add_dependency('spree_core', '>= 0.80.0.beta')
 
 end
 
