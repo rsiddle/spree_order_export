@@ -1,13 +1,13 @@
-<%= search_form_for [:admin, @search], :url => '/admin/reports/order_export' do |s| %>
+<%= search_form_for [:admin, @search], :url => order_export_admin_reports_path do |s| %>
     <label><%= t("date_range") %></label><br />
     <div class="yui-g date-range-filter">
         <div class="yui-u sub-field first">
             <%= s.text_field :created_at_gt, :class => 'datepicker' %><br />
-            <label class="sub"><%= t("start") %></label>
+            <label class="sub"><%= t("start_date") %></label>
         </div>
         <div class="yui-u sub-field">
             <%= s.text_field :created_at_lt, :class => 'datepicker' %><br />
-            <label><%= t("stop") %></label>
+            <label><%= t("end_date") %></label>
         </div>
         <div class="yui-u sub-field">
             <%= s.check_box :completed_at_not_null, {:style => 'vertical-align: middle'} %><br />
