@@ -19,3 +19,5 @@ en:
             discount: Discount
             nonprofit: Nonprofit
 
+    sales_total: Sales Total
+    sales_total_description: Total Sales
