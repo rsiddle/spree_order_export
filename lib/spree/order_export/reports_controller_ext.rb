@@ -54,7 +54,7 @@ module Spree
                 t('order_export_ext.header.quantity'),
                 t('order_export_ext.header.order_total'),
                 t('order_export_ext.header.payment_method'),
-                "Service Type"
+                "Service Type",
                 "Weight"
               ]
 
