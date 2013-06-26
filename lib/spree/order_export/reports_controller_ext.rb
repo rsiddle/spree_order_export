@@ -53,14 +53,16 @@ module Spree
                 # t('order_export_ext.header.discount'),
                 t('order_export_ext.header.quantity'),
                 t('order_export_ext.header.order_total'),
-                t('order_export_ext.header.payment_method')
+                t('order_export_ext.header.payment_method'),
+                "Service Type"
+                "Weight"
               ]
 
               csv << headers
 
               @orders.each do |order|
                 ship_address = order.ship_address
-                
+
                 order.line_items.each do |line_item|
                   csv_line = []
                   csv_line << order.updated_at
@@ -82,6 +84,8 @@ module Spree
                   csv_line << line_item.quantity
                   csv_line << line_item.total.to_s
                   csv_line << order.payments.map(&:payment_method).map(&:name).join(", ") rescue nil
+                  csv_line << "92"
+                  csv_line << ""
                   csv << csv_line
                 end
               end
