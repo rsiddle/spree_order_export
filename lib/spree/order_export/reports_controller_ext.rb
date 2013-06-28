@@ -64,29 +64,33 @@ module Spree
                 ship_address = order.ship_address
 
                 order.line_items.each do |line_item|
-                  csv_line = []
-                  csv_line << order.updated_at
-                  csv_line << order.completed_at
-                  csv_line << order.number
-                  csv_line << order.name
-                  csv_line << ship_address.company
-                  csv_line << ship_address.full_name
-                  csv_line << ship_address.address1
-                  csv_line << ship_address.address2
-                  csv_line << ship_address.city
-                  csv_line << ship_address.state_text
-                  csv_line << ship_address.zipcode
-                  csv_line << ship_address.phone
-                  csv_line << ship_address.country.name
-                  csv_line << line_item.variant.name
-                  csv_line << line_item.variant.option_values.map(&:name).join(", ")
-                  # csv_line << line_item.variant.option_values.first(:conditions => "option_type_id = 2").name
-                  csv_line << line_item.quantity
-                  csv_line << line_item.total.to_s
-                  csv_line << order.payments.map(&:payment_method).map(&:name).join(", ") rescue nil
-                  csv_line << "92"
-                  csv_line << ""
-                  csv << csv_line
+                  begin
+                    csv_line = []
+                    csv_line << order.updated_at
+                    csv_line << order.completed_at
+                    csv_line << order.number
+                    csv_line << order.name
+                    csv_line << ship_address.company
+                    csv_line << ship_address.full_name
+                    csv_line << ship_address.address1
+                    csv_line << ship_address.address2
+                    csv_line << ship_address.city
+                    csv_line << ship_address.state_text
+                    csv_line << ship_address.zipcode
+                    csv_line << ship_address.phone
+                    csv_line << ship_address.country.name
+                    csv_line << line_item.variant.name
+                    csv_line << line_item.variant.option_values.map(&:name).join(", ")
+                    # csv_line << line_item.variant.option_values.first(:conditions => "option_type_id = 2").name
+                    csv_line << line_item.quantity
+                    csv_line << line_item.total.to_s
+                    csv_line << order.payments.map(&:payment_method).map(&:name).join(", ") rescue nil
+                    csv_line << "92"
+                    csv_line << ""
+                    csv << csv_line
+                  rescue
+                  # possibly write this out the line
+                  end
                 end
               end
             end
