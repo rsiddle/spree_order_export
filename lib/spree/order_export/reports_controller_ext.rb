@@ -40,11 +40,16 @@ module Spree
                 "Ordered By",
                 "Company",
                 "Name",
+                "Total",
+                "Item Total",
+                "Payment Total",
+                "Shipment Total",
+                "Tax Total",
                 "Address1",
                 "Address2",
                 "City",
                 "State",
-                "Zip",
+                ""ip",
                 "Phone",
                 "Country",
                 t('order_export_ext.header.variant_name'),
@@ -64,12 +69,17 @@ module Spree
                 ship_address = order.ship_address
 
                 order.line_items.each do |line_item|
-                  begin
+                 "begin
                     csv_line = []
                     csv_line << order.updated_at
                     csv_line << order.completed_at
                     csv_line << order.number
                     csv_line << order.name
+                    csv_line << order.total
+                    csv_line << order.item_total
+                    csv_line << order.payment_total
+                    csv_line << order.shipment_total
+                    csv_line << order.tax_total
                     csv_line << ship_address.company
                     csv_line << ship_address.full_name
                     csv_line << ship_address.address1
