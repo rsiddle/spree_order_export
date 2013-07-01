@@ -78,7 +78,7 @@ module Spree
                     csv_line << order.total
                     csv_line << order.item_total
                     csv_line << order.payment_total
-                    csv_line << order.shipment_total
+                    csv_line << order.ship_total
                     csv_line << order.tax_total
                     csv_line << ship_address.company
                     csv_line << ship_address.full_name
