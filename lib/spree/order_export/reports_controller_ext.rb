@@ -49,7 +49,7 @@ module Spree
                 "Address2",
                 "City",
                 "State",
-                ""ip",
+                "Zip",
                 "Phone",
                 "Country",
                 t('order_export_ext.header.variant_name'),
@@ -69,7 +69,7 @@ module Spree
                 ship_address = order.ship_address
 
                 order.line_items.each do |line_item|
-                 "begin
+                  begin
                     csv_line = []
                     csv_line << order.updated_at
                     csv_line << order.completed_at
