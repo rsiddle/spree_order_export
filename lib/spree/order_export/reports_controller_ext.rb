@@ -38,9 +38,9 @@ module Spree
                 t('order_export_ext.header.completed_at'),
                 t('order_export_ext.header.number'),
                 "Ordered By",
-                "Name",
                 "Order State",
                 "Shipment State",
+                "Payment State",
                 "Total",
                 "Item Total",
                 "Payment Total",
@@ -68,6 +68,8 @@ module Spree
                     csv_line << order.number
                     csv_line << order.name
                     csv_line << order.state
+                    csv_line << order.shipment_state
+                    csv_line << order.payment_state
                     csv_line << order.total
                     csv_line << order.item_total
                     csv_line << order.payment_total
