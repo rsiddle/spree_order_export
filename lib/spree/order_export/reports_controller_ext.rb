@@ -1,6 +1,7 @@
 module Spree
   module OrderExport
     module ReportsControllerExt
+      require 'csv'
       def self.included(base)
         base.class_eval do
 
