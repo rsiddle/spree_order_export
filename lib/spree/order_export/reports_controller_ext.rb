@@ -32,7 +32,7 @@ module Spree
             @orders = @search.result
 
 
-            orders_export = CSV.generate(:col_sep => ",", :row_sep => "\r\n") do |csv|
+            orders_export = ::CSV.generate(:col_sep => ",", :row_sep => "\r\n") do |csv|
               headers = [
                 t('order_export_ext.header.last_updated'),
                 t('order_export_ext.header.completed_at'),
